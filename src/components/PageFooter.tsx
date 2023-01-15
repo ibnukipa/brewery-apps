@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: Colors.sapphireBlueMin1,
+    fontWeight: '500',
+    color: Colors.sapphireBlueMin2,
   },
   indicator: {
     marginLeft: 8,

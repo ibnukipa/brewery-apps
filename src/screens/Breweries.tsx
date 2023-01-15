@@ -6,6 +6,7 @@ import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 import Colors from '../themes/Colors';
 import BrewerySnippet from '../components/BrewerySnippet';
 import PageFooter from '../components/PageFooter';
+import SearchBar from '../components/SearchBar';
 
 const Breweries = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -13,7 +14,7 @@ const Breweries = () => {
 
   useEffect(() => {
     dispatch.breweries.fetchData();
-  }, [dispatch]);
+  }, [dispatch, breweriesState?.by_name]);
 
   const renderBrewery = useCallback(
     ({item}: {item: Brewery}) => <BrewerySnippet brewery={item} />,
@@ -34,28 +35,34 @@ const Breweries = () => {
   }, [dispatch]);
 
   return (
-    <FlatList
-      style={styles.container}
-      contentContainerStyle={styles.content}
-      data={breweriesState?.data}
-      refreshing={breweriesState?.isLoading}
-      refreshControl={
-        <RefreshControl
-          refreshing={breweriesState?.isLoading}
-          onRefresh={onRefresh}
-        />
-      }
-      onEndReached={
-        !breweriesState?.isLoading && !breweriesState?.isLoadingMore && !breweriesState?.isLastPage
-          ? onFetchMore
-          : null
-      }
-      ListFooterComponent={
-        <PageFooter isLoading={breweriesState?.isLoadingMore} />
-      }
-      renderItem={renderBrewery}
-      ItemSeparatorComponent={renderSeparator}
-    />
+    <>
+      <SearchBar />
+      <FlatList
+        style={styles.container}
+        contentContainerStyle={styles.content}
+        data={breweriesState?.data}
+        refreshing={breweriesState?.isLoading}
+        refreshControl={
+          <RefreshControl
+            refreshing={breweriesState?.isLoading}
+            onRefresh={onRefresh}
+          />
+        }
+        onEndReached={
+          !breweriesState?.isLoading &&
+          !breweriesState?.isLoadingMore &&
+          !breweriesState?.isLastPage
+            ? onFetchMore
+            : null
+        }
+        ListFooterComponent={
+          <PageFooter isLoading={breweriesState?.isLoadingMore} />
+        }
+        showsVerticalScrollIndicator={false}
+        renderItem={renderBrewery}
+        ItemSeparatorComponent={renderSeparator}
+      />
+    </>
   );
 };
 
@@ -64,8 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.neutralContainer,
   },
   content: {
-    paddingVertical: 24,
-    paddingHorizontal: 16,
+    padding: 16,
   },
   separator: {
     height: 1,

@@ -83,6 +83,12 @@ export const breweries = createModel<RootModel>()({
         isLoadingMore,
       };
     },
+    setByName: (state, searchKey: string) => {
+      return {
+        ...state,
+        by_name: searchKey,
+      };
+    },
     fetchDataSuccess: (state, data: Brewery[]) => {
       return {
         ...state,
