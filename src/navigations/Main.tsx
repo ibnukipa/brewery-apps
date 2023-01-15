@@ -5,7 +5,7 @@ import {
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
 import Breweries from '../screens/Breweries';
-import BreweryFavourites from '../screens/BreweryFavourites';
+import BreweryFavorites from '../screens/BreweryFavorites';
 import {View} from 'react-native';
 import {Text} from '../components';
 import Colors from '../themes/Colors';
@@ -22,7 +22,7 @@ const tabOptions: OptionsType = ({route}) => ({
     let slug: string;
 
     switch (route.name) {
-      case 'BreweryFavourites':
+      case 'BreweryFavorites':
         slug = 'Favourite';
         break;
       case 'Breweries':
@@ -56,13 +56,16 @@ const tabOptions: OptionsType = ({route}) => ({
   tabBarActiveTintColor: Colors.sapphireBluePlus1,
   tabBarInactiveTintColor: Colors.sapphireBlue,
   tabBarShowLabel: false,
+  headerTitleStyle: {
+    color: Colors.sapphireBluePlus1,
+  },
 });
 
 const Main = () => {
   return (
     <Tab.Navigator screenOptions={tabOptions}>
       <Tab.Screen name={'Breweries'} component={Breweries} />
-      <Tab.Screen name={'BreweryFavourites'} component={BreweryFavourites} />
+      <Tab.Screen name={'BreweryFavorites'} component={BreweryFavorites} />
     </Tab.Navigator>
   );
 };

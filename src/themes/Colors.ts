@@ -7,7 +7,6 @@ const Colors = {
   neutralDisabled: '#AAABAD',
   neutralBorder: '#E3E3E4',
   neutralContainer: '#F3F5F6',
-  neutralSecondaryBg: '#F3F5F6',
   neutralWhite: '#FFF',
 
   // Flip Orange

@@ -11,3 +11,10 @@ export type Leaves<T> = T extends object
   : '';
 
 export type GeneralStyle = ViewStyle | TextStyle | ImageStyle;
+
+export type Pagination<Model> = {
+  data: Model[];
+  page_limit: number;
+  page_offset: number;
+  isLoading: boolean;
+};

@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
 import {
-  StyleSheet,
   Text as RNText,
   TextProps as RNTextProps,
 } from 'react-native';
