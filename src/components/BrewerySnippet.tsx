@@ -47,7 +47,7 @@ const BrewerySnippet = ({brewery}: {brewery: Brewery}) => {
         <Text style={Styles.subtitle}>{brewery.address_3}</Text>
       )}
       <View style={styles.extraContent}>
-        <Text style={Styles.body}>
+        <Text numberOfLines={1} style={[Styles.body, styles.extraText]}>
           {brewery.city}, {brewery.state}
         </Text>
         <Button
@@ -77,6 +77,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 8,
   },
+  extraText: {
+    flex: 1,
+  }
 });
 
 export default BrewerySnippet;

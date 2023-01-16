@@ -72,7 +72,7 @@ const Breweries = () => {
             : null
         }
         ListFooterComponent={
-          breweriesState?.data.length > 0 ? (
+          breweriesState?.data.length > 8 ? (
             <PageFooter isLoading={breweriesState?.isLoadingMore} />
           ) : null
         }
