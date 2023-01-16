@@ -6,10 +6,8 @@ import {
 } from '@react-navigation/bottom-tabs';
 import Breweries from '../screens/Breweries';
 import BreweryFavorites from '../screens/BreweryFavorites';
-import {View} from 'react-native';
-import {Text} from '../components';
+import {IconTab} from '../components';
 import Colors from '../themes/Colors';
-import {GeneralStyle} from '../types/general';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,39 +17,7 @@ type OptionsType = (props: {
 
 const tabOptions: OptionsType = ({route}) => ({
   tabBarIcon: ({focused, color}: any) => {
-    let slug: string;
-
-    switch (route.name) {
-      case 'BreweryFavorites':
-        slug = 'Favourite';
-        break;
-      case 'Breweries':
-      default:
-        slug = 'Brewery';
-        break;
-    }
-
-    const containerStyle: GeneralStyle = {
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: color,
-      paddingBottom: 2,
-    };
-
-    const textStyle: GeneralStyle = {
-      color,
-    };
-
-    if (focused) {
-      containerStyle.borderBottomWidth = 1.5;
-      textStyle.fontWeight = 'bold';
-    }
-
-    return (
-      <View style={containerStyle}>
-        <Text style={textStyle}>{slug}</Text>
-      </View>
-    );
+    return <IconTab routeName={route.name} focused={focused} color={color} />;
   },
   tabBarActiveTintColor: Colors.sapphireBluePlus1,
   tabBarInactiveTintColor: Colors.sapphireBlue,
@@ -65,7 +31,11 @@ const Home = () => {
   return (
     <Tab.Navigator key={'Home'} screenOptions={tabOptions}>
       <Tab.Screen name={'Breweries'} component={Breweries} />
-      <Tab.Screen name={'BreweryFavorites'} component={BreweryFavorites} />
+      <Tab.Screen
+        name={'BreweryFavorites'}
+        options={{title: 'Brewery Favorites'}}
+        component={BreweryFavorites}
+      />
     </Tab.Navigator>
   );
 };

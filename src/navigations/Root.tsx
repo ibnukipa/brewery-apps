@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Home from './Home';
 import Brewery from '../screens/Brewery';
+import Colors from '../themes/Colors';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -10,9 +11,15 @@ export type RootStackParamList = {
 
 const RootStack = createStackNavigator<RootStackParamList>();
 
+const stackOptions = {
+  headerTitleStyle: {
+    color: Colors.sapphireBluePlus1,
+  },
+};
+
 const Root = () => {
   return (
-    <RootStack.Navigator key={'Root'}>
+    <RootStack.Navigator screenOptions={stackOptions} key={'Root'}>
       <RootStack.Screen
         options={{headerShown: false}}
         name={'Home'}

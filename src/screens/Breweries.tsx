@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch, RootState} from '../models/store';
 import {Brewery} from '../models/brewery';
@@ -7,6 +7,8 @@ import Colors from '../themes/Colors';
 import BrewerySnippet from '../components/BrewerySnippet';
 import PageFooter from '../components/PageFooter';
 import SearchBar from '../components/SearchBar';
+import Styles from '../themes/Styles';
+import {EmptyList} from '../components';
 
 const Breweries = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -22,7 +24,7 @@ const Breweries = () => {
   );
 
   const renderSeparator = useCallback(
-    () => <View style={styles.separator} />,
+    () => <View style={Styles.separator} />,
     [],
   );
 
@@ -33,6 +35,20 @@ const Breweries = () => {
   const onFetchMore = useCallback(() => {
     dispatch.breweries.fetchMoreData();
   }, [dispatch]);
+
+  const [emptyTitle, emptyDesc] = useMemo(() => {
+    if (breweriesState?.by_name === '') {
+      return [
+        'There is No Data',
+        'Please come back later when the system is back',
+      ];
+    } else {
+      return [
+        `No Data for "${breweriesState?.by_name}"`,
+        'Please use another to find the breweries',
+      ];
+    }
+  }, [breweriesState?.by_name]);
 
   return (
     <>
@@ -56,7 +72,14 @@ const Breweries = () => {
             : null
         }
         ListFooterComponent={
-          <PageFooter isLoading={breweriesState?.isLoadingMore} />
+          breweriesState?.data.length > 8 ? (
+            <PageFooter isLoading={breweriesState?.isLoadingMore} />
+          ) : null
+        }
+        ListEmptyComponent={
+          !breweriesState?.isLoading ? (
+            <EmptyList title={emptyTitle} subtitle={emptyDesc} />
+          ) : null
         }
         showsVerticalScrollIndicator={false}
         renderItem={renderBrewery}
@@ -72,10 +95,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
-  },
-  separator: {
-    height: 1,
-    marginVertical: 4,
+    flexGrow: 1,
   },
 });
 
