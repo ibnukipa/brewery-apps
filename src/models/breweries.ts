@@ -1,17 +1,10 @@
 import {createModel} from '@rematch/core';
 import type {RootModel} from '.';
 import {Pagination} from '../types/general';
-import querystring from 'query-string';
 import {Brewery} from './brewery';
 
 type BreweriesSearch = {
   by_name?: string;
-};
-
-type BreweriesQueries = {
-  by_name?: string;
-  page?: string | number;
-  per_page?: string | number;
 };
 
 type BreweriesState = {
@@ -24,18 +17,18 @@ type BreweriesState = {
 const BREWERIES_URL = 'https://api.openbrewerydb.org/breweries';
 
 const generateBreweriesQueryParams = (breweriesState: BreweriesState) => {
-  const queries: BreweriesQueries = {};
+  let queries: string = '';
 
   if (breweriesState.page_offset > 0) {
-    queries.page = breweriesState.page_offset;
+    queries += `&page=${breweriesState.page_offset}`;
   }
 
   if (breweriesState.page_limit >= 0) {
-    queries.per_page = breweriesState.page_limit;
+    queries += `&per_page=${breweriesState.page_limit}`;
   }
 
   if (breweriesState.by_name) {
-    queries.by_name = breweriesState.by_name;
+    queries += `&by_name=${breweriesState.by_name}`;
   }
 
   return queries;
@@ -97,9 +90,7 @@ export const breweries = createModel<RootModel>()({
         ...breweriesState,
         page_offset: 1,
       });
-      const response = await fetch(
-        `${BREWERIES_URL}?${querystring.stringify(breweriesQueries)}`,
-      );
+      const response = await fetch(`${BREWERIES_URL}?${breweriesQueries}`);
       const data = await response.json();
       dispatch.breweries.fetchDataSuccess(data);
     },
@@ -110,9 +101,7 @@ export const breweries = createModel<RootModel>()({
         ...breweriesState,
         page_offset: breweriesState.page_offset + 1,
       });
-      const response = await fetch(
-        `${BREWERIES_URL}?${querystring.stringify(breweriesQueries)}`,
-      );
+      const response = await fetch(`${BREWERIES_URL}?${breweriesQueries}`);
       const data = await response.json();
       dispatch.breweries.fetchMoreDataSuccess(data);
     },

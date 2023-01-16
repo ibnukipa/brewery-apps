@@ -16,6 +16,7 @@ const SearchBar = () => {
   return (
     <View style={styles.container}>
       <InputText
+        testID={'searchBox'}
         returnKeyType={'done'}
         placeholder={'Search Brewery by Name...'}
         onChangeText={onSearch}
