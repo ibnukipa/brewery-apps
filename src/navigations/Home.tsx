@@ -89,7 +89,7 @@ const Home = () => {
   return (
     <Tab.Navigator key={'Home'} screenOptions={tabOptions}>
       <Tab.Screen name={'Breweries'} component={Breweries} />
-      <Tab.Screen name={'BreweryFavorites'} component={BreweryFavorites} />
+      <Tab.Screen name={'BreweryFavorites'} options={{ title: 'Brewery Favorites' }} component={BreweryFavorites} />
     </Tab.Navigator>
   );
 };
