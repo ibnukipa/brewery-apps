@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import Home from './Home';
 import Brewery from '../screens/Brewery';
-import Colors from "../themes/Colors";
+import Colors from '../themes/Colors';
 
 export type RootStackParamList = {
   Home: undefined;
