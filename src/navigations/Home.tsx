@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {RouteProp} from '@react-navigation/native';
 import {
   createBottomTabNavigator,
@@ -9,7 +9,8 @@ import BreweryFavorites from '../screens/BreweryFavorites';
 import {View} from 'react-native';
 import {Text} from '../components';
 import Colors from '../themes/Colors';
-import {GeneralStyle} from '../types/general';
+import {useSelector} from 'react-redux';
+import {RootState} from '../models/store';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,41 +18,64 @@ type OptionsType = (props: {
   route: RouteProp<any>;
 }) => BottomTabNavigationOptions;
 
-const tabOptions: OptionsType = ({route}) => ({
-  tabBarIcon: ({focused, color}: any) => {
-    let slug: string;
+const MyIcon = ({
+  routeName,
+  color,
+  focused,
+}: {
+  routeName: string;
+  color: string;
+  focused: boolean;
+}) => {
+  const breweryFavoritesCount = useSelector(
+    (state: RootState) => state.breweryFavourites?.count,
+  );
 
-    switch (route.name) {
+  const [iconSlug] = useMemo(() => {
+    switch (routeName) {
       case 'BreweryFavorites':
-        slug = 'Favourite';
-        break;
+        let favStr = 'Favourite';
+        if (breweryFavoritesCount > 0) {
+          favStr += ` (${breweryFavoritesCount})`;
+        }
+        return [favStr];
       case 'Breweries':
       default:
-        slug = 'Brewery';
-        break;
+        return ['Brewery'];
     }
+  }, [routeName, breweryFavoritesCount]);
 
-    const containerStyle: GeneralStyle = {
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderColor: color,
-      paddingBottom: 2,
-    };
+  const [containerStyle, textStyle] = useMemo(() => {
+    return [
+      {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: color,
+        paddingBottom: 2,
+      },
+      {
+        color,
+      },
+    ];
+  }, [color]);
 
-    const textStyle: GeneralStyle = {
-      color,
-    };
-
-    if (focused) {
-      containerStyle.borderBottomWidth = 1.5;
-      textStyle.fontWeight = 'bold';
+  const [focusedContainerStyle, focusedTextStyle] = useMemo(() => {
+    if (!focused) {
+      return [{}, {}];
+    } else {
+      return [{borderBottomWidth: 1.5}, {fontWeight: 'bold'}];
     }
+  }, [focused]);
 
-    return (
-      <View style={containerStyle}>
-        <Text style={textStyle}>{slug}</Text>
-      </View>
-    );
+  return (
+    <View style={[containerStyle, focusedContainerStyle]}>
+      <Text style={[textStyle, focusedTextStyle]}>{iconSlug}</Text>
+    </View>
+  );
+};
+const tabOptions: OptionsType = ({route}) => ({
+  tabBarIcon: ({focused, color}: any) => {
+    return <MyIcon routeName={route.name} focused={focused} color={color} />;
   },
   tabBarActiveTintColor: Colors.sapphireBluePlus1,
   tabBarInactiveTintColor: Colors.sapphireBlue,

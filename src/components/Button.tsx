@@ -11,11 +11,13 @@ type ButtonProps = {
   type?: 'primary' | 'secondary';
   text?: string;
   isDisabled?: boolean;
+  size?: 'normal' | 'tiny';
 } & TouchableOpacityProps;
 
 const Button = ({
   type = 'primary',
   text = 'Press Me',
+  size = 'normal',
   isDisabled,
   ...props
 }: ButtonProps): JSX.Element => {
@@ -29,17 +31,34 @@ const Button = ({
     }
   }, [type]);
 
+  const [sizeStyle, textSizeStyle] = useMemo(() => {
+    switch (size) {
+      case 'normal':
+        return [{}, {}];
+      case 'tiny':
+        return [styles.tinyContainer, styles.tinyText];
+    }
+  }, [size]);
+
   return (
     <TouchableOpacity
+      disabled={isDisabled}
       activeOpacity={0.75}
       style={[
         styles.container,
+        sizeStyle,
         buttonStyle,
         isDisabled && styles.disableContainer,
         props.style,
       ]}
       {...props}>
-      <Text style={[styles.text, textStyle, isDisabled && styles.disabledText]}>
+      <Text
+        style={[
+          styles.text,
+          textSizeStyle,
+          textStyle,
+          isDisabled && styles.disabledText,
+        ]}>
         {text}
       </Text>
     </TouchableOpacity>
@@ -52,6 +71,11 @@ const styles = StyleSheet.create({
     borderRadius: 46,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  tinyContainer: {
+    height: 24,
+    paddingHorizontal: 12,
   },
   primaryContainer: {
     backgroundColor: Colors.sapphireBlue,
@@ -74,6 +98,10 @@ const styles = StyleSheet.create({
   },
   disabledText: {
     color: Colors.neutralDisabled,
+  },
+  tinyText: {
+    fontSize: 12,
+    fontWeight: '600',
   },
 });
 

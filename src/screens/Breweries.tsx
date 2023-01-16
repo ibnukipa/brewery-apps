@@ -7,6 +7,7 @@ import Colors from '../themes/Colors';
 import BrewerySnippet from '../components/BrewerySnippet';
 import PageFooter from '../components/PageFooter';
 import SearchBar from '../components/SearchBar';
+import Styles from '../themes/Styles';
 
 const Breweries = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -22,7 +23,7 @@ const Breweries = () => {
   );
 
   const renderSeparator = useCallback(
-    () => <View style={styles.separator} />,
+    () => <View style={Styles.separator} />,
     [],
   );
 
@@ -72,10 +73,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
-  },
-  separator: {
-    height: 1,
-    marginVertical: 4,
+    flexGrow: 1,
   },
 });
 

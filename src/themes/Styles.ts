@@ -14,7 +14,7 @@ const Styles = StyleSheet.create({
   },
   h2: {
     fontSize: 24,
-    lineHeight: 34,
+    lineHeight: 36,
     color: Colors.sapphireBlue,
   },
   h4: {
@@ -37,6 +37,12 @@ const Styles = StyleSheet.create({
   },
   textCenter: {
     textAlign: 'center',
+  },
+
+  // Spacing
+  separator: {
+    height: 1,
+    marginVertical: 4,
   },
 });
 
