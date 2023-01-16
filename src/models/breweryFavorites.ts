@@ -29,6 +29,7 @@ export const breweryFavourites = createModel<RootModel>()({
       return {
         ...state,
         data: [...state.data, brewery],
+        count: state.count + 1,
       };
     },
     remove: (state, breweryId: Brewery['id']) => {
@@ -42,6 +43,7 @@ export const breweryFavourites = createModel<RootModel>()({
       return {
         ...state,
         data: newData,
+        count: state.count - 1,
       };
     },
   },
