@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import InputText from './InputText';
-import React, {useCallback} from 'react';
+import React from 'react';
 import Colors from '../themes/Colors';
 import {useDispatch} from 'react-redux';
 import {Dispatch} from '../models/store';

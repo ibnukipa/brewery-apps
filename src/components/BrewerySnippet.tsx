@@ -1,28 +1,38 @@
 import React, {useCallback} from 'react';
-import {Brewery} from '../models/breweries';
+import {Brewery} from '../models/brewery';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {Text} from './index';
+import {Text, BreweryType} from './index';
 import Colors from '../themes/Colors';
+import {useNavigation} from '@react-navigation/native';
+import Styles from '../themes/Styles';
 
 const BrewerySnippet = ({brewery}: {brewery: Brewery}) => {
+  const navigation = useNavigation();
+
   const onPress = useCallback(() => {
-    // navigation.navigate('');
-  }, []);
+    navigation.navigate('Brewery', {
+      id: brewery.id,
+    });
+  }, [navigation, brewery]);
 
   return (
     <TouchableOpacity
       activeOpacity={0.75}
       onPress={onPress}
       style={styles.container}>
-      <Text style={styles.title}>{brewery.name}</Text>
-      {brewery.street && <Text style={styles.street}>{brewery.street}</Text>}
+      <Text style={Styles.h2}>{brewery.name}</Text>
+      {brewery.street && <Text style={Styles.h4}>{brewery.street}</Text>}
+      {brewery.address_2 && (
+        <Text style={Styles.subtitle}>{brewery.address_2}</Text>
+      )}
+      {brewery.address_3 && (
+        <Text style={Styles.subtitle}>{brewery.address_3}</Text>
+      )}
       <View style={styles.extraContent}>
-        <Text style={styles.address}>
+        <Text style={Styles.body}>
           {brewery.city}, {brewery.state}
         </Text>
-        <View style={styles.typeContainer}>
-          <Text style={styles.type}>{brewery.brewery_type.toUpperCase()}</Text>
-        </View>
+        <BreweryType type={brewery.brewery_type} />
       </View>
     </TouchableOpacity>
   );
@@ -36,31 +46,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.neutralDisabled,
-  },
-  title: {
-    fontSize: 24,
-    lineHeight: 34,
-    color: Colors.sapphireBlue,
-  },
-  street: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: Colors.neutralSecondaryText,
-  },
-  address: {
-    fontSize: 14,
-    color: Colors.neutralSecondaryText,
-  },
-  typeContainer: {
-    backgroundColor: Colors.jadeGreenPlus1,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 100,
-  },
-  type: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    color: Colors.neutralWhite,
   },
   extraContent: {
     flexDirection: 'row',

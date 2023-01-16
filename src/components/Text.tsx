@@ -1,8 +1,5 @@
 import React, {useMemo} from 'react';
-import {
-  Text as RNText,
-  TextProps as RNTextProps,
-} from 'react-native';
+import {Text as RNText, TextProps as RNTextProps} from 'react-native';
 import Colors, {IColors} from '../themes/Colors';
 import {GeneralStyle} from '../types/general';
 
@@ -11,7 +8,7 @@ type TextProps = {
 } & RNTextProps;
 
 const Text = ({
-  color = 'neutralMainText',
+  color = 'sapphireBluePlus2',
   children,
   ...props
 }: TextProps): JSX.Element => {

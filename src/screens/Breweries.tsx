@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch, RootState} from '../models/store';
-import {Brewery} from '../models/breweries';
+import {Brewery} from '../models/brewery';
 import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 import Colors from '../themes/Colors';
 import BrewerySnippet from '../components/BrewerySnippet';

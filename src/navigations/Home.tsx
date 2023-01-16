@@ -61,13 +61,13 @@ const tabOptions: OptionsType = ({route}) => ({
   },
 });
 
-const Main = () => {
+const Home = () => {
   return (
-    <Tab.Navigator screenOptions={tabOptions}>
+    <Tab.Navigator key={'Home'} screenOptions={tabOptions}>
       <Tab.Screen name={'Breweries'} component={Breweries} />
       <Tab.Screen name={'BreweryFavorites'} component={BreweryFavorites} />
     </Tab.Navigator>
   );
 };
 
-export default Main;
+export default Home;
